@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { fetchShopifyProducts } from "../../api/shopifyApi";
 import Product from "./Product";
-import axios from "axios";
+import "../../styles/ProductList.css";
 
 const ProductList = () => {
    const [products, setProducts] = useState([]);
 
    useEffect(() => {
       const fetchProducts = async () => {
-         const response = await axios.get(
-            "https://developers.cjdropshipping.com/api2.0/v1/product/list",
-            {
-               headers: {
-                  "CJ-Access-Token": process.env.REACT_APP_CJ_ACCESS_TOKEN,
-               },
-            }
-         );
-
-         if (response.data.result) {
-            setProducts(response.data.data.list);
-         }
+         const fetchedProducts = await fetchShopifyProducts();
+         setProducts(fetchedProducts);
       };
 
       fetchProducts();
@@ -28,11 +19,11 @@ const ProductList = () => {
       <div>
          {products.map((product) => (
             <Product
-               key={product.pid}
-               id={product.pid}
-               title={product.productNameEn}
-               price={product.sellPrice}
-               image={product.productImage}
+               key={product.id}
+               id={product.id}
+               title={product.title}
+               price={product.price}
+               image={product.image}
             />
          ))}
       </div>
