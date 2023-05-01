@@ -21,16 +21,41 @@ const ProductDetails = () => {
    }, [id]);
 
    return (
-      <div>
+      <div className="product-details-container">
          {product ? (
             <>
                <h1>{product.title}</h1>
-               <img src={product.image} alt={product.title} />
-               <p>{product.description}</p>
-               <p>${product.price}</p>
+               <div className="product-image">
+                  <img src={product.image} alt={product.title} />
+               </div>
+               <div
+                  className="product-description"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+               ></div>
+               <p>Price: ${product.price}</p>
+               <div className="variants">
+                  <h3>Variants:</h3>
+                  {product.variants.map((variant) => (
+                     <div key={variant.id} className="variant">
+                        <h4>{variant.title}</h4>
+                        <img
+                           src={variant.selectedOptions[0].value}
+                           alt={variant.title}
+                        />
+                        <p>Price: ${variant.price}</p>
+                        <div className="selected-options">
+                           {variant.selectedOptions.map((option, index) => (
+                              <p key={index}>
+                                 {option.name}: {option.value}
+                              </p>
+                           ))}
+                        </div>
+                     </div>
+                  ))}
+               </div>
             </>
          ) : (
-            <p>Loading product...</p>
+            <h2>Loading product details...</h2>
          )}
       </div>
    );

@@ -1,3 +1,5 @@
+//ProductList.js
+
 import React, { useState, useEffect } from "react";
 import { fetchShopifyProducts } from "../../api/shopifyApi";
 import Product from "./Product";
