@@ -9,6 +9,7 @@ const ProductList = () => {
    useEffect(() => {
       const fetchProducts = async () => {
          const fetchedProducts = await fetchShopifyProducts();
+         console.log("Fetched products:", fetchedProducts);
          setProducts(fetchedProducts);
       };
 
@@ -16,15 +17,16 @@ const ProductList = () => {
    }, []);
 
    return (
-      <div>
+      <div className="products-container">
          {products.map((product) => (
-            <Product
-               key={product.id}
-               id={product.id}
-               title={product.title}
-               price={product.price}
-               image={product.image}
-            />
+            <div className="product-item" key={product.id}>
+               <Product
+                  id={product.id}
+                  title={product.title}
+                  price={product.price}
+                  image={product.image}
+               />
+            </div>
          ))}
       </div>
    );

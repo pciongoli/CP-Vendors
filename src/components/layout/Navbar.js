@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
+import { useContext } from "react";
+import { CartContext } from "../../components/cart/CartContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/Navbar.css";
 
 const Navbar = () => {
    const [user, setUser] = useState(null);
-   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+   const [dropdownOpen, setDropdownOpen] = useState(false);
+   const { cart } = useContext(CartContext);
 
    useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -17,21 +22,22 @@ const Navbar = () => {
       };
    }, []);
 
-   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+   const toggleDropdown = () => {
+      setDropdownOpen(!dropdownOpen);
+   };
 
    return (
-      <nav className="navbar">
-         <Link className="navbar-logo" to="/">
-            Home
-         </Link>
-         <button className="navbar-toggler" onClick={handleNavCollapse}>
-            <span className="navbar-toggler-icon">&#9776;</span>
-         </button>
-         <div
-            className={`navbar-links${
-               isNavCollapsed ? " navbar-collapse" : ""
-            }`}
-         >
+      <nav>
+         <div>
+            <Link to="/">Home</Link>
+         </div>
+         <div>
+            <Link to="/cart">
+               <FontAwesomeIcon icon={faShoppingCart} />
+               <span>{cart.length}</span>
+            </Link>
+         </div>
+         <div className="navbar-links">
             {user ? (
                <>
                   <Link to="/logout">Logout</Link>
@@ -40,6 +46,27 @@ const Navbar = () => {
                <>
                   <Link to="/login">Login</Link>
                   <Link to="/signup">Sign up</Link>
+               </>
+            )}
+         </div>
+         <div className="hamburger" onClick={toggleDropdown}>
+            ☰
+         </div>
+         <div className={`dropdown-menu ${dropdownOpen ? "open" : ""}`}>
+            {user ? (
+               <>
+                  <Link to="/logout" onClick={toggleDropdown}>
+                     Logout
+                  </Link>
+               </>
+            ) : (
+               <>
+                  <Link to="/login" onClick={toggleDropdown}>
+                     Login
+                  </Link>
+                  <Link to="/signup" onClick={toggleDropdown}>
+                     Sign up
+                  </Link>
                </>
             )}
          </div>

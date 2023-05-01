@@ -9,22 +9,25 @@ import ProductList from "./components/products/ProductList";
 import ProductDetails from "./components/products/ProductDetails";
 import ShoppingCart from "./components/cart/ShoppingCart";
 import Checkout from "./components/checkout/Checkout";
+import { CartProvider } from "./components/cart/CartContext";
 
 function App() {
    return (
-      <Router>
-         <Navbar />
-         <Routes>
-            <Route path="/" element={<ProductList />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<ShoppingCart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/logout" element={<Logout />} />
-         </Routes>
-         <Footer />
-      </Router>
+      <CartProvider>
+         <Router>
+            <Navbar />
+            <Routes>
+               <Route path="/" element={<ProductList />} />
+               <Route path="/product/:id" element={<ProductDetails />} />
+               <Route path="/cart" element={<ShoppingCart />} />
+               <Route path="/checkout" element={<Checkout />} />
+               <Route path="/login" element={<Login />} />
+               <Route path="/signup" element={<Signup />} />
+               <Route path="/logout" element={<Logout />} />
+            </Routes>
+            <Footer />
+         </Router>
+      </CartProvider>
    );
 }
 

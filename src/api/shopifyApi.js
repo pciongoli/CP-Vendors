@@ -1,16 +1,15 @@
 import axios from "axios";
 
-const SHOPIFY_API_BASE_URL =
-   "https://cp-vendors.myshopify.com/api/2023-04/graphql.json";
+const API_URL = "/graphql";
 
-export const fetchShopifyProductById = async (productId) => {
+const fetchShopifyProducts = async () => {
    const query = `
-    query($id: ID!) {
-      node(id: $id) {
-        ... on Product {
+  {
+    products(first: 10) {
+      edges {
+        node {
           id
           title
-          description
           priceRange {
             minVariantPrice {
               amount
@@ -19,81 +18,71 @@ export const fetchShopifyProductById = async (productId) => {
           images(first: 1) {
             edges {
               node {
-                src
+                transformedSrc
               }
             }
           }
         }
       }
     }
-  `;
+  }`;
 
-   const response = await axios.post(
-      SHOPIFY_API_BASE_URL,
-      { query, variables: { id: productId } },
-      {
-         headers: {
-            "Content-Type": "application/json",
-            "X-Shopify-Storefront-Access-Token":
-               process.env.REACT_APP_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-         },
-      }
-   );
-
-   const product = response.data.data.node;
-   return {
-      id: product.id,
-      title: product.title,
-      description: product.description,
-      price: product.priceRange.minVariantPrice.amount,
-      image: product.images.edges[0]?.node.src || "",
-   };
+   try {
+      const response = await axios.post(API_URL, { query });
+      const products = response.data.data.products.edges.map(({ node }) => ({
+         id: node.id,
+         title: node.title,
+         price: parseFloat(node.priceRange.minVariantPrice.amount),
+         image: node.images.edges[0]?.node.transformedSrc,
+      }));
+      return products;
+   } catch (error) {
+      console.error("Error fetching products from server", error);
+      return [];
+   }
 };
 
-export const fetchShopifyProducts = async () => {
+const fetchShopifyProductById = async (productId) => {
    const query = `
-    query {
-      products(first: 10) {
-        edges {
-          node {
-            id
-            title
-            description
-            priceRange {
-              minVariantPrice {
-                amount
-              }
-            }
-            images(first: 1) {
-              edges {
-                node {
-                  src
-                }
-              }
+  query($id: ID!) {
+    node(id: $id) {
+      ... on Product {
+        id
+        title
+        description: descriptionHtml
+        priceRange {
+          minVariantPrice {
+            amount
+          }
+        }
+        images(first: 1) {
+          edges {
+            node {
+             
+              transformedSrc
             }
           }
         }
       }
     }
-  `;
+  }`;
 
-   const response = await axios.post(
-      SHOPIFY_API_BASE_URL,
-      { query },
-      {
-         headers: {
-            "Content-Type": "application/json",
-            "X-Shopify-Storefront-Access-Token":
-               process.env.REACT_APP_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
-         },
-      }
-   );
+   const variables = { id: productId };
 
-   return response.data.data.products.edges.map(({ node }) => ({
-      id: node.id,
-      title: node.title,
-      description: node.description,
-      price: node.priceRange.minVariantPrice.amount,
-      image: node.images.edges[0]?.node.src || "",
-   }));
+   try {
+      const response = await axios.post(API_URL, { query, variables });
+      const product = response.data.data.node;
+      return {
+         id: product.id,
+         title: product.title,
+         description: product.description,
+         price: parseFloat(product.priceRange.minVariantPrice.amount),
+         image: product.images.edges[0]?.node.transformedSrc,
+      };
+   } catch (error) {
+      console.error("Error fetching product by ID from server", error);
+      return null;
+   }
 };
+
+export { fetchShopifyProducts, fetchShopifyProductById };
