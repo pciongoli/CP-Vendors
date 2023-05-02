@@ -72,6 +72,9 @@ const fetchShopifyProductById = async (productId) => {
                 name
                 value
               }
+              image {
+                transformedSrc
+              }
             }
           }
         }
@@ -101,6 +104,7 @@ const fetchShopifyProductById = async (productId) => {
          title: node.title,
          price: parseFloat(node.price),
          selectedOptions: node.selectedOptions,
+         imageUrl: node.image?.transformedSrc,
       }));
 
       return {
