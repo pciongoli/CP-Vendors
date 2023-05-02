@@ -7,13 +7,13 @@ nav {
    justify-content: space-between;
    align-items: center;
    padding: 1rem;
-   background-color: #333;
+   background-color: #7b45c7;
    z-index: 1000;
 }
 
 nav a {
    text-decoration: none;
-   color: white;
+   color: #97c5b4;
 }
 
 .navbar-links {
@@ -56,6 +56,19 @@ nav a {
    background-color: #f1f1f1;
 }
 
+.logo-container {
+   width: 12rem;
+   height: 4rem;
+   overflow: hidden;
+   display: flex;
+   align-items: center;
+   margin-right: 1rem;
+}
+
+.logo {
+   height: auto;
+   width: 100%;
+}
 .open .dropdown-menu-content {
    display: flex;
 }

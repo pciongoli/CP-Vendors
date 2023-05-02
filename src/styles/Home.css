@@ -1,0 +1,14 @@
+.home {
+   text-align: center;
+}
+
+.jumbotron {
+   background-color: #7b45c7;
+   color: #fff;
+   padding: 2rem;
+   margin-bottom: 2rem;
+}
+
+.featured-products {
+   margin: 2rem auto;
+}

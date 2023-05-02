@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { CartContext } from "../../components/cart/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../assets/logo/CP-Vendors-Transparent-Logo.png";
 import "../../styles/Navbar.css";
 
 const Navbar = () => {
@@ -29,7 +30,11 @@ const Navbar = () => {
    return (
       <nav>
          <div>
-            <Link to="/">Home</Link>
+            <Link to="/" className="brand-name">
+               <div className="logo-container">
+                  <img src={logo} alt="CP Vendors" className="logo" />
+               </div>
+            </Link>
          </div>
          <div>
             <Link to="/cart">
@@ -38,6 +43,7 @@ const Navbar = () => {
             </Link>
          </div>
          <div className="navbar-links">
+            <Link to="/products">Products</Link>
             {user ? (
                <>
                   <Link to="/logout">Logout</Link>
@@ -54,6 +60,9 @@ const Navbar = () => {
          </div>
          <div className={`dropdown-menu ${dropdownOpen ? "open" : ""}`}>
             <div className="dropdown-menu-content">
+               <Link to="/products" onClick={toggleDropdown}>
+                  Products
+               </Link>
                {user ? (
                   <>
                      <Link to="/logout" onClick={toggleDropdown}>

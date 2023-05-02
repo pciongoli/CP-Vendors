@@ -71,10 +71,6 @@ body {
    overflow-wrap: break-word;
 }
 
-.main-content {
-   padding-top: 4rem; /* Adjust this value as needed to create the desired amount of space */
-}
-
 .products-container {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
