@@ -12,8 +12,20 @@ export const CartProvider = ({ children }) => {
       localStorage.setItem("cart", JSON.stringify(cart));
    }, [cart]);
 
-   const addToCart = (product) => {
-      setCart([...cart, product]);
+   const addToCart = (variant) => {
+      const productWithVariant = {
+         id: variant.product.id,
+         name: variant.product.name,
+         image: variant.product.image,
+         price: parseFloat(variant.product.price),
+         variant: {
+            id: variant.id,
+            name: variant.title,
+            image: variant.imageUrl,
+            price: parseFloat(variant.price),
+         },
+      };
+      setCart([...cart, productWithVariant]);
    };
 
    const removeFromCart = (productId) => {
