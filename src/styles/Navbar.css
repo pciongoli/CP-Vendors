@@ -1,9 +1,14 @@
 nav {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
    display: flex;
    justify-content: space-between;
    align-items: center;
    padding: 1rem;
    background-color: #333;
+   z-index: 1000;
 }
 
 nav a {
@@ -24,16 +29,20 @@ nav a {
 }
 
 .dropdown-menu {
-   display: none;
-   flex-direction: column;
    position: absolute;
    right: 0;
    top: 100%;
+   z-index: 10;
+   overflow: hidden;
+}
+
+.dropdown-menu-content {
+   display: none;
+   flex-direction: column;
    background-color: #f9f9f9;
    border: 1px solid #ccc;
    border-radius: 4px;
    padding: 10px 0;
-   z-index: 10;
 }
 
 .dropdown-menu a {
@@ -47,7 +56,7 @@ nav a {
    background-color: #f1f1f1;
 }
 
-.open {
+.open .dropdown-menu-content {
    display: flex;
 }
 
@@ -66,7 +75,7 @@ nav a {
       display: block;
    }
 
-   .open {
+   .open .dropdown-menu-content {
       display: flex;
    }
 }

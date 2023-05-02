@@ -53,22 +53,24 @@ const Navbar = () => {
             ☰
          </div>
          <div className={`dropdown-menu ${dropdownOpen ? "open" : ""}`}>
-            {user ? (
-               <>
-                  <Link to="/logout" onClick={toggleDropdown}>
-                     Logout
-                  </Link>
-               </>
-            ) : (
-               <>
-                  <Link to="/login" onClick={toggleDropdown}>
-                     Login
-                  </Link>
-                  <Link to="/signup" onClick={toggleDropdown}>
-                     Sign up
-                  </Link>
-               </>
-            )}
+            <div className="dropdown-menu-content">
+               {user ? (
+                  <>
+                     <Link to="/logout" onClick={toggleDropdown}>
+                        Logout
+                     </Link>
+                  </>
+               ) : (
+                  <>
+                     <Link to="/login" onClick={toggleDropdown}>
+                        Login
+                     </Link>
+                     <Link to="/signup" onClick={toggleDropdown}>
+                        Sign up
+                     </Link>
+                  </>
+               )}
+            </div>
          </div>
       </nav>
    );

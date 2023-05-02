@@ -36,45 +36,53 @@ const ProductDetails = () => {
       setSelectedVariant(variant);
    };
    return (
-      <div className="product-details-container">
-         {product && selectedVariant ? (
-            <>
-               <h1>{product.title}</h1>
-               <div className="product-image">
-                  <img
-                     src={selectedVariant.imageUrl || product.image}
-                     alt={product.title}
-                  />
-                  <p>
-                     Price: ${selectedVariant.price}
-                     <button
-                        onClick={handleAddToCart}
-                        className="add-to-cart-button"
-                     >
-                        Add to Cart
-                     </button>
-                  </p>
-               </div>
-               <div className="variants">
-                  <h3>Variants:</h3>
-                  {product.variants.map((variant) => (
-                     <div
-                        key={variant.id}
-                        className="variant"
-                        onClick={() => handleVariantClick(variant)}
-                     >
-                        <h4>{variant.title}</h4>
+      <div className="main-content">
+         <div className="product-details-container">
+            {product && selectedVariant ? (
+               <>
+                  <div className="product-details-left">
+                     <h1>{product.title}</h1>
+                     <div className="variants">
+                        <h3>Variants:</h3>
+                        {product.variants.map((variant) => (
+                           <div
+                              key={variant.id}
+                              className="variant"
+                              onClick={() => handleVariantClick(variant)}
+                           >
+                              <h4>{variant.title}</h4>
+                           </div>
+                        ))}
                      </div>
-                  ))}
-               </div>
-               <div
-                  className="product-description"
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-               ></div>
-            </>
-         ) : (
-            <h2>Loading product details...</h2>
-         )}
+                  </div>
+                  <div className="product-description-container">
+                     <div className="product-image">
+                        <img
+                           src={selectedVariant.imageUrl || product.image}
+                           alt={product.title}
+                        />
+                        <p>
+                           Price: ${selectedVariant.price}
+                           <button
+                              onClick={handleAddToCart}
+                              className="add-to-cart-button"
+                           >
+                              Add to Cart
+                           </button>
+                        </p>
+                     </div>
+                     <div
+                        className="product-description"
+                        dangerouslySetInnerHTML={{
+                           __html: product.description,
+                        }}
+                     ></div>
+                  </div>
+               </>
+            ) : (
+               <h2>Loading product details...</h2>
+            )}
+         </div>
       </div>
    );
 };
