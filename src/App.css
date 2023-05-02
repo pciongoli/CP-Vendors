@@ -36,7 +36,7 @@
 }
 
 .main-content {
-   padding-top: 4rem; /* Adjust this value as needed to create the desired amount of space */
+   padding-top: 3rem; /* Adjust this value as needed to create the desired amount of space */
    flex-grow: 1;
 }
 

@@ -15,8 +15,11 @@ const ShoppingCart = () => {
          <div className="shopping-cart">
             <h2 className="shopping-cart__title">Shopping Cart</h2>
             <ul className="shopping-cart__list">
-               {cart.map((product) => (
-                  <li className="shopping-cart__item" key={product.variant.id}>
+               {cart.map((product, index) => (
+                  <li
+                     className="shopping-cart__item"
+                     key={`${product.variant.id}-${index}`}
+                  >
                      <img src={product.variant.image} alt={product.name} />
                      <div className="shopping-cart__item-info">
                         <h3 className="shopping-cart__item-name">
@@ -26,7 +29,7 @@ const ShoppingCart = () => {
                            Variant: {product.variant.name}
                         </p>
                         <p className="shopping-cart__item-price">
-                           Price: ${product.variant.price}
+                           Price: ${(product.variant.price / 100).toFixed(2)}
                         </p>
                      </div>
                      <button
@@ -40,10 +43,12 @@ const ShoppingCart = () => {
             </ul>
             <h3 className="shopping-cart__total">
                Total: $
-               {cart.reduce(
-                  (total, product) => total + (product.variant?.price || 0),
-                  0
-               )}
+               {(
+                  cart.reduce(
+                     (total, product) => total + (product.variant?.price || 0),
+                     0
+                  ) / 100
+               ).toFixed(2)}
             </h3>
             {cart.length > 0 && (
                <Link to="/checkout" className="shopping-cart__checkout-button">

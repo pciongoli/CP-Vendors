@@ -62,7 +62,7 @@ const ProductDetails = () => {
                            alt={product.title}
                         />
                         <p>
-                           Price: ${selectedVariant.price}
+                           Price: ${(selectedVariant.price / 100).toFixed(2)}
                            <button
                               onClick={handleAddToCart}
                               className="add-to-cart-button"

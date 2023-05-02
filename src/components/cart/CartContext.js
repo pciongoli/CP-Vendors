@@ -15,21 +15,21 @@ export const CartProvider = ({ children }) => {
    const addToCart = (variant) => {
       const productWithVariant = {
          id: variant.product.id,
-         name: variant.product.name,
-         image: variant.product.image,
-         price: parseFloat(variant.product.price),
+         name: variant.product.title,
+         image: variant.product.images[0].src,
+         price: parseFloat(variant.price).toFixed(2),
          variant: {
             id: variant.id,
             name: variant.title,
-            image: variant.imageUrl,
-            price: parseFloat(variant.price),
+            image: variant.image.src,
+            price: parseFloat(variant.price).toFixed(2),
          },
       };
       setCart([...cart, productWithVariant]);
    };
 
-   const removeFromCart = (productId) => {
-      setCart(cart.filter((product) => product.id !== productId));
+   const removeFromCart = (variantId) => {
+      setCart(cart.filter((product) => product.variant.id !== variantId));
    };
 
    const clearCart = () => {

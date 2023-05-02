@@ -8,10 +8,9 @@ const Home = () => {
          <div className="home">
             <div className="jumbotron">
                <h1>Welcome to CP Vendors</h1>
-               <p>Find Funky Products for a Funky You!</p>
+               <p>Funky Finds for a Funk You!</p>
             </div>
             <div className="featured-products">
-               <h2>Featured</h2>
                <ProductList />
             </div>
          </div>

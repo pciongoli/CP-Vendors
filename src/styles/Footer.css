@@ -11,6 +11,9 @@
    color: white;
 }
 
+.footer p {
+   color: #7b45c7;
+}
 .footer a {
    color: white;
    text-decoration: none;

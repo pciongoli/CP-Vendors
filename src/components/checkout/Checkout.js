@@ -43,7 +43,7 @@ const Checkout = () => {
                >
                   <img src={item.variant.image} alt={item.name} />
                   <h2>{item.name}</h2>
-                  <p>Price: ${item.variant.price}</p>
+                  <p>Price: ${(item.variant.price / 100).toFixed(2)}</p>
                   <p>Variant: {item.variant.name}</p>
                </div>
             ))}

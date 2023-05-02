@@ -6,9 +6,13 @@
    background-color: #7b45c7;
    color: #fff;
    padding: 2rem;
-   margin-bottom: 2rem;
+   margin-bottom: 0.1rem;
+}
+
+.jumbotron p {
+   color: #97c5b4;
 }
 
 .featured-products {
-   margin: 2rem auto;
+   margin: 0rem auto;
 }

@@ -8,7 +8,7 @@
 }
 
 /* Checkout title */
-h1 {
+h2 {
    font-size: 32px;
    font-weight: 600;
    margin-bottom: 20px;
@@ -18,6 +18,7 @@ h1 {
 /* Checkout item */
 .checkout-item {
    display: flex;
+   flex-wrap: wrap;
    align-items: center;
    padding: 20px;
    border-bottom: 1px solid #eaeaea;
@@ -34,6 +35,7 @@ h1 {
    font-size: 24px;
    font-weight: 600;
    margin-bottom: 10px;
+   flex-grow: 1;
 }
 
 .checkout-item p {
@@ -50,6 +52,7 @@ textarea {
    margin-bottom: 20px;
    border: 1px solid #eaeaea;
    font-size: 16px;
+   box-sizing: border-box;
 }
 
 /* Stripe card input */
@@ -84,4 +87,20 @@ p {
    font-size: 14px;
    margin-top: -10px;
    margin-bottom: 20px;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 600px) {
+   .checkout-item img {
+      width: 80px;
+      height: 80px;
+   }
+
+   .checkout-item h2 {
+      font-size: 20px;
+   }
+
+   .checkout-item p {
+      font-size: 14px;
+   }
 }
