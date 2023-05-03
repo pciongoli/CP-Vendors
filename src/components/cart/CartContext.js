@@ -34,7 +34,14 @@ export const CartProvider = ({ children }) => {
    };
 
    const removeFromCart = (variantId) => {
-      setCart(cart.filter((product) => product.variant.id !== variantId));
+      const index = cart.findIndex(
+         (product) => product.variant.id === variantId
+      );
+      if (index !== -1) {
+         const newCart = [...cart];
+         newCart.splice(index, 1);
+         setCart(newCart);
+      }
    };
 
    const clearCart = () => {
