@@ -31,7 +31,7 @@ const Product = ({ id, title, price, image }) => {
             <img src={image} alt={title} />
          </Link>
          <h2 className="product-title">{title}</h2>
-         <p className="product-price">Price: ${(price / 100).toFixed(2)}</p>
+         <p className="product-price">Price: ${parseFloat(price).toFixed(2)}</p>
          <button onClick={handleAddToCart}>
             <FontAwesomeIcon icon={faCartPlus} /> Add to Cart
          </button>

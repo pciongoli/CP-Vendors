@@ -13,7 +13,18 @@ const ProductDetails = () => {
 
    const handleAddToCart = () => {
       console.log("Adding to cart:", selectedVariant);
-      addToCart(selectedVariant);
+      addToCart({
+         id: selectedVariant.id,
+         title: selectedVariant.title,
+         price: selectedVariant.price,
+         image: { src: selectedVariant.imageUrl },
+         product: {
+            id: product.id,
+            title: product.title,
+            images: [{ src: product.image }],
+            price: parseFloat(product.variants[0].price).toFixed(2),
+         },
+      });
    };
 
    useEffect(() => {
@@ -62,7 +73,7 @@ const ProductDetails = () => {
                            alt={product.title}
                         />
                         <p>
-                           Price: ${(selectedVariant.price / 100).toFixed(2)}
+                           Price: ${selectedVariant.price.toFixed(2)}
                            <button
                               onClick={handleAddToCart}
                               className="add-to-cart-button"

@@ -26,7 +26,7 @@ const ProductList = () => {
                   <Product
                      id={product.id}
                      title={product.title}
-                     price={product.price}
+                     price={parseFloat(product.price / 100).toFixed(2)}
                      image={product.image}
                   />
                </div>

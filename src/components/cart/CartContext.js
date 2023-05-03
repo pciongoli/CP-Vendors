@@ -13,6 +13,11 @@ export const CartProvider = ({ children }) => {
    }, [cart]);
 
    const addToCart = (variant) => {
+      if (!variant || !variant.product) {
+         console.error("Invalid variant data:", variant);
+         return;
+      }
+
       const productWithVariant = {
          id: variant.product.id,
          name: variant.product.title,
