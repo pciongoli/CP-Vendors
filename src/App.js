@@ -10,6 +10,7 @@ import ProductDetails from "./components/products/ProductDetails";
 import ShoppingCart from "./components/cart/ShoppingCart";
 import Checkout from "./components/checkout/Checkout";
 import HomePage from "./components/home/HomePage";
+import SearchResults from "./components/search/SearchResults";
 import { CartProvider } from "./components/cart/CartContext";
 import "./App.css";
 
@@ -24,6 +25,7 @@ function App() {
                      <Route path="/" element={<HomePage />} />
                      <Route path="/products" element={<ProductList />} />
                      <Route path="/product/:id" element={<ProductDetails />} />
+                     <Route path="/search" element={<SearchResults />} />
                      <Route path="/cart" element={<ShoppingCart />} />
                      <Route path="/checkout" element={<Checkout />} />
                      <Route path="/login" element={<Login />} />

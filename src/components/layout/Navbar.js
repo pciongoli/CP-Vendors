@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import { useContext } from "react";
 import { CartContext } from "../../components/cart/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +11,9 @@ const Navbar = () => {
    const [user, setUser] = useState(null);
    const [dropdownOpen, setDropdownOpen] = useState(false);
    const { cart } = useContext(CartContext);
+   const [query, setQuery] = useState("");
+
+   const navigate = useNavigate();
 
    useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -27,6 +29,13 @@ const Navbar = () => {
       setDropdownOpen(!dropdownOpen);
    };
 
+   const handleSearchSubmit = (e) => {
+      e.preventDefault();
+      if (query) {
+         navigate(`/search?query=${query}`);
+      }
+   };
+
    return (
       <nav>
          <div>
@@ -36,6 +45,16 @@ const Navbar = () => {
                </div>
             </Link>
          </div>
+         <form onSubmit={handleSearchSubmit} className="search-form">
+            <input
+               type="text"
+               placeholder="Search products..."
+               value={query}
+               onChange={(e) => setQuery(e.target.value)}
+            />
+            <button type="submit">Search</button>
+         </form>
+
          <div>
             <Link to="/cart">
                <FontAwesomeIcon icon={faShoppingCart} />
