@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Product from "../products/Product";
 import { fetchShopifyProducts } from "../../api/shopifyApi";
+import "../../styles/SearchResults.css";
 
 const SearchResults = () => {
    const [products, setProducts] = useState([]);
@@ -50,7 +51,7 @@ const SearchResults = () => {
                   key={product.id}
                   id={product.id}
                   title={product.title}
-                  price={product.price}
+                  price={parseFloat(product.price / 100).toFixed(2)} // Divide the price by 100
                   image={product.image}
                   tags={product.tags}
                />

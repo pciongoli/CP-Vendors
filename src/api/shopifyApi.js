@@ -33,7 +33,7 @@ const fetchShopifyProducts = async () => {
       const products = response.data.data.products.edges.map(({ node }) => ({
          id: node.id,
          title: node.title,
-         price: parseFloat(node.priceRange.minVariantPrice.amount),
+         price: parseFloat(node.priceRange.minVariantPrice.amount).toFixed(2),
          image: node.images.edges[0]?.node.transformedSrc,
          tags: node.tags,
       }));

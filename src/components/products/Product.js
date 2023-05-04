@@ -13,7 +13,7 @@ const Product = ({ id, title, price, image, tags }) => {
          {
             id,
             title,
-            price: parseFloat(price).toFixed(2),
+            price,
             image: { src: image },
             product: {
                id,
