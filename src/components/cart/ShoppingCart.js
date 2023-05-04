@@ -4,7 +4,15 @@ import { CartContext } from "./CartContext";
 import "../../styles/ShoppingCart.css";
 
 const ShoppingCart = () => {
-   const { cart, removeFromCart } = useContext(CartContext);
+   const { cart, removeFromCart, updateQuantity } = useContext(CartContext);
+
+   const handleQuantityChange = (variantId, e) => {
+      const newQuantity = parseInt(e.target.value, 10);
+      if (isNaN(newQuantity) || newQuantity < 1) {
+         return;
+      }
+      updateQuantity(variantId, newQuantity);
+   };
 
    const handleRemoveFromCart = (productId) => {
       removeFromCart(productId);
@@ -29,8 +37,18 @@ const ShoppingCart = () => {
                            Variant: {product.variant.name}
                         </p>
                         <p className="shopping-cart__item-quantity">
-                           Quantity: {product.quantity}
+                           Quantity:
+                           <input
+                              type="number"
+                              min="1"
+                              value={product.quantity}
+                              onChange={(e) =>
+                                 handleQuantityChange(product.variant.id, e)
+                              }
+                              className="shopping-cart__item-quantity-input"
+                           />
                         </p>
+
                         <p className="shopping-cart__item-price">
                            Price: $
                            {parseFloat(product.variant.price).toFixed(2)}
