@@ -9,18 +9,21 @@ const Product = ({ id, title, price, image }) => {
    const { addToCart } = useContext(CartContext);
 
    const handleAddToCart = () => {
-      addToCart({
-         id,
-         title,
-         price: parseFloat(price).toFixed(2),
-         image: { src: image },
-         product: {
+      addToCart(
+         {
             id,
             title,
-            images: [{ src: image }],
             price: parseFloat(price).toFixed(2),
+            image: { src: image },
+            product: {
+               id,
+               title,
+               images: [{ src: image }],
+               price: parseFloat(price).toFixed(2),
+            },
          },
-      });
+         1 // Pass a default quantity of 1
+      );
    };
 
    const decodedId = id.replace("gid://shopify/Product/", "");
@@ -32,6 +35,7 @@ const Product = ({ id, title, price, image }) => {
          </Link>
          <h2 className="product-title">{title}</h2>
          <p className="product-price">Price: ${parseFloat(price).toFixed(2)}</p>
+
          <button onClick={handleAddToCart}>
             <FontAwesomeIcon icon={faCartPlus} /> Add to Cart
          </button>

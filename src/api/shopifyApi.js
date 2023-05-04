@@ -126,7 +126,7 @@ const createDraftOrder = async (cart, customer) => {
 
    const lineItems = cart.map((item) => ({
       variant_id: parseInt(item.variant.id),
-      quantity: 1, // Update this with the actual quantity
+      quantity: item.quantity, // Include the quantity here
       title: item.name,
       price: item.variant.price,
    }));

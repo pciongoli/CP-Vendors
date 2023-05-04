@@ -39,10 +39,13 @@ const Checkout = () => {
       }
    };
 
-   const totalPrice = cart.reduce(
-      (total, item) => total + parseFloat(item.variant.price),
-      0
-   );
+   const totalPrice = cart.reduce((total, item) => {
+      console.log("Item price:", item.variant.price);
+      console.log("Item quantity:", item.quantity);
+      const itemTotal = Number(item.variant.price) * item.quantity;
+      console.log("Item total:", itemTotal);
+      return total + itemTotal;
+   }, 0);
 
    return (
       <div className="checkout-container">

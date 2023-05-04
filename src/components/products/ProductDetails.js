@@ -11,20 +11,30 @@ const ProductDetails = () => {
 
    const { addToCart } = useContext(CartContext);
 
+   const [quantity, setQuantity] = useState(1); // Add the quantity state
+
+   const handleQuantityChange = (e) => {
+      const newQuantity = parseInt(e.target.value, 10);
+      setQuantity(isNaN(newQuantity) || newQuantity < 1 ? 1 : newQuantity);
+   };
+
    const handleAddToCart = () => {
       console.log("Adding to cart:", selectedVariant);
-      addToCart({
-         id: selectedVariant.id,
-         title: selectedVariant.title,
-         price: selectedVariant.price,
-         image: { src: selectedVariant.imageUrl },
-         product: {
-            id: product.id,
-            title: product.title,
-            images: [{ src: product.image }],
-            price: parseFloat(product.variants[0].price).toFixed(2),
+      addToCart(
+         {
+            id: selectedVariant.id,
+            title: selectedVariant.title,
+            price: selectedVariant.price,
+            image: { src: selectedVariant.imageUrl },
+            product: {
+               id: product.id,
+               title: product.title,
+               images: [{ src: product.image }],
+               price: parseFloat(product.variants[0].price).toFixed(2),
+            },
          },
-      });
+         quantity // Pass the actual quantity value from the state
+      );
    };
 
    useEffect(() => {
@@ -71,6 +81,13 @@ const ProductDetails = () => {
                         <img
                            src={selectedVariant.imageUrl || product.image}
                            alt={product.title}
+                        />
+                        <input
+                           type="number"
+                           min="1"
+                           value={quantity}
+                           onChange={handleQuantityChange}
+                           className="quantity-input"
                         />
                         <p>
                            Price: ${selectedVariant.price.toFixed(2)}

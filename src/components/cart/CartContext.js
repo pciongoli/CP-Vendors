@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
       localStorage.setItem("cart", JSON.stringify(cart));
    }, [cart]);
 
-   const addToCart = (variant) => {
+   const addToCart = (variant, quantity) => {
       if (!variant || !variant.product) {
          console.error("Invalid variant data:", variant);
          return;
@@ -29,8 +29,20 @@ export const CartProvider = ({ children }) => {
             image: variant.image.src,
             price: parseFloat(variant.price).toFixed(2),
          },
+         quantity,
       };
-      setCart([...cart, productWithVariant]);
+
+      const existingProductIndex = cart.findIndex(
+         (product) => product.variant.id === variant.id
+      );
+
+      if (existingProductIndex !== -1) {
+         const newCart = [...cart];
+         newCart[existingProductIndex].quantity += quantity; // Increment by the quantity parameter
+         setCart(newCart);
+      } else {
+         setCart([...cart, productWithVariant]);
+      }
    };
 
    const removeFromCart = (variantId) => {
