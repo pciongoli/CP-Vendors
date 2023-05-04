@@ -34,3 +34,30 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
    console.log(`Server running on port ${PORT}`);
 });
+
+app.post("/api/draft_order", async (req, res) => {
+   try {
+      const draftOrder = req.body;
+      const response = await axios.post(
+         `https://${process.env.REACT_APP_SHOPIFY_STORE_NAME}.myshopify.com/admin/api/2023-01/draft_orders.json`,
+         draftOrder,
+         {
+            headers: {
+               "Content-Type": "application/json",
+               "X-Shopify-Access-Token":
+                  process.env.REACT_APP_SHOPIFY_ADMIN_ACCESS_TOKEN,
+            },
+         }
+      );
+
+      res.json(response.data);
+   } catch (error) {
+      console.error("Error creating draft order:", error);
+      if (error.response) {
+         console.error("Error response data:", error.response.data);
+      }
+      res.status(500).json({
+         error: "An error occurred while creating the draft order",
+      });
+   }
+});

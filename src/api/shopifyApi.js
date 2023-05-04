@@ -121,4 +121,54 @@ const fetchShopifyProductById = async (productId) => {
    }
 };
 
-export { fetchShopifyProducts, fetchShopifyProductById };
+const createDraftOrder = async (cart, customer) => {
+   console.log("Cart items:", cart);
+
+   const lineItems = cart.map((item) => ({
+      variant_id: parseInt(item.variant.id),
+      quantity: 1, // Update this with the actual quantity
+      title: item.name,
+      price: item.variant.price,
+   }));
+
+   const draftOrder = {
+      draft_order: {
+         line_items: lineItems,
+         customer: {
+            first_name: customer.name.split(" ")[0],
+            last_name: customer.name.split(" ")[1] || "",
+            email: customer.email,
+         },
+         shipping_address: {
+            first_name: customer.name.split(" ")[0],
+            last_name: customer.name.split(" ")[1] || "",
+            phone: customer.phoneNumber,
+            address1: customer.address.address1,
+            city: customer.address.city,
+            province: customer.address.province,
+            zip: customer.address.zip,
+            country: customer.address.country,
+         },
+      },
+   };
+
+   try {
+      const response = await axios.post("/api/draft_order", draftOrder);
+
+      if (response.data && response.data.draft_order) {
+         const invoiceUrl = response.data.draft_order.invoice_url;
+         return {
+            id: response.data.draft_order.id,
+            invoiceUrl,
+         };
+      } else {
+         console.error("Error creating draft order:", response);
+         return null;
+      }
+   } catch (error) {
+      console.error("Error creating draft order:", error);
+      return null;
+   }
+};
+
+export { fetchShopifyProducts, fetchShopifyProductById, createDraftOrder };

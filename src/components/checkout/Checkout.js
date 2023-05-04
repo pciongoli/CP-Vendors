@@ -1,40 +1,42 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../cart/CartContext";
-import Client from "shopify-buy";
+import { createDraftOrder } from "../../api/shopifyApi";
 import "../../styles/Checkout.css";
-
-const client = Client.buildClient({
-   domain: "your-shop-name.myshopify.com",
-   storefrontAccessToken: "your-storefront-access-token",
-});
 
 const Checkout = () => {
    const { cart } = useContext(CartContext);
    const [name, setName] = useState("");
+   const [email, setEmail] = useState("");
+   const [phone, setPhone] = useState("");
    const [address, setAddress] = useState("");
    const [city, setCity] = useState("");
    const [province, setProvince] = useState("");
    const [zip, setZip] = useState("");
    const [country, setCountry] = useState("");
-   const [phone, setPhone] = useState("");
-   const [email, setEmail] = useState("");
 
    const handleSubmit = async (e) => {
       e.preventDefault();
 
-      // Create a Shopify checkout
-      const checkout = await client.checkout.create();
+      const customer = {
+         name,
+         email,
+         phoneNumber: phone,
+         address: {
+            address1: address,
+            city,
+            province,
+            zip,
+            country,
+         },
+      };
 
-      // Add line items to the checkout
-      const lineItems = cart.map((item) => ({
-         variantId: item.variant.id,
-         quantity: 1, // Update this with the actual quantity
-      }));
+      const draftOrder = await createDraftOrder(cart, customer);
 
-      await client.checkout.addLineItems(checkout.id, lineItems);
-
-      // Redirect the user to Shopify's secure checkout page
-      window.location.href = checkout.webUrl;
+      if (draftOrder && draftOrder.invoiceUrl) {
+         window.location.href = draftOrder.invoiceUrl;
+      } else {
+         console.error("Error creating draft order.");
+      }
    };
 
    const totalPrice = cart.reduce(
