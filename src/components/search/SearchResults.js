@@ -20,9 +20,21 @@ const SearchResults = () => {
 
    useEffect(() => {
       if (query) {
-         const searchResults = products.filter((product) =>
-            product.title.toLowerCase().includes(query.toLowerCase())
-         );
+         const searchResults = products.filter((product) => {
+            const queryLowerCase = query.toLowerCase();
+            const titleMatch = product.title
+               .toLowerCase()
+               .includes(queryLowerCase);
+            const descriptionMatch =
+               product.description &&
+               product.description.toLowerCase().includes(queryLowerCase);
+            const tagsMatch =
+               product.tags &&
+               product.tags.some((tag) =>
+                  tag.toLowerCase().includes(queryLowerCase)
+               );
+            return titleMatch || descriptionMatch || tagsMatch;
+         });
          setFilteredProducts(searchResults);
       } else {
          setFilteredProducts(products);
@@ -40,6 +52,7 @@ const SearchResults = () => {
                   title={product.title}
                   price={product.price}
                   image={product.image}
+                  tags={product.tags}
                />
             ))}
          </div>

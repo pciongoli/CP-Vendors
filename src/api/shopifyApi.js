@@ -10,6 +10,7 @@ const fetchShopifyProducts = async () => {
         node {
           id
           title
+          tags 
           priceRange {
             minVariantPrice {
               amount
@@ -34,6 +35,7 @@ const fetchShopifyProducts = async () => {
          title: node.title,
          price: parseFloat(node.priceRange.minVariantPrice.amount),
          image: node.images.edges[0]?.node.transformedSrc,
+         tags: node.tags,
       }));
       return products;
    } catch (error) {

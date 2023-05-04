@@ -5,7 +5,7 @@ import { CartContext } from "../cart/CartContext";
 import { Link } from "react-router-dom";
 import "../../styles/Product.css";
 
-const Product = ({ id, title, price, image }) => {
+const Product = ({ id, title, price, image, tags }) => {
    const { addToCart } = useContext(CartContext);
 
    const handleAddToCart = () => {
@@ -35,6 +35,17 @@ const Product = ({ id, title, price, image }) => {
          </Link>
          <h2 className="product-title">{title}</h2>
          <p className="product-price">Price: ${parseFloat(price).toFixed(2)}</p>
+
+         {/* Display the tags */}
+         {tags && (
+            <div className="product-tags">
+               {tags.map((tag, index) => (
+                  <span key={index} className="product-tag">
+                     {tag}
+                  </span>
+               ))}
+            </div>
+         )}
 
          <button onClick={handleAddToCart}>
             <FontAwesomeIcon icon={faCartPlus} /> Add to Cart
