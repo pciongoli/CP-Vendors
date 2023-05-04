@@ -33,7 +33,7 @@ const ProductDetails = () => {
                price: parseFloat(product.variants[0].price).toFixed(2),
             },
          },
-         quantity // Pass the actual quantity value from the state
+         quantity // Pass the quantity value here
       );
    };
 

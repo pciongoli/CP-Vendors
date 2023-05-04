@@ -28,6 +28,9 @@ const ShoppingCart = () => {
                         <p className="shopping-cart__item-variant">
                            Variant: {product.variant.name}
                         </p>
+                        <p className="shopping-cart__item-quantity">
+                           Quantity: {product.quantity}
+                        </p>
                         <p className="shopping-cart__item-price">
                            Price: $
                            {parseFloat(product.variant.price).toFixed(2)}
@@ -47,11 +50,14 @@ const ShoppingCart = () => {
                {cart
                   .reduce(
                      (total, product) =>
-                        total + (parseFloat(product.variant.price) || 0),
+                        total +
+                        (parseFloat(product.variant.price) * product.quantity ||
+                           0),
                      0
                   )
                   .toFixed(2)}
             </h3>
+
             {cart.length > 0 && (
                <Link to="/checkout" className="shopping-cart__checkout-button">
                   Proceed to Checkout
