@@ -4,7 +4,7 @@ import "../../styles/Footer.css";
 const Footer = () => {
    return (
       <footer>
-         <p>
+         <p className="footer-p">
             &copy; {new Date().getFullYear()} Your E-Commerce Store. All rights
             reserved.
          </p>

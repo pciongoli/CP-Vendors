@@ -7,7 +7,9 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
    <React.StrictMode>
       <CartProvider>
-         <App />
+         <div className="main-content">
+            <App />
+         </div>
       </CartProvider>
    </React.StrictMode>,
    document.getElementById("root")
